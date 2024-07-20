@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+    <div id="container">
+        <div id="encabezado">
+            <img src="/imagenes/encabezado_logo.jpeg" width="550" height="200"><img src="/imagenes/encabezado_modelo.jpeg" width="350" height="200">
+        </div>
+        <div id="menu">
+            <a href="index.html"><img src="/imagenes/boton_01_bienvenidos.gif"></a><a href="servicios.html"><img src="/imagenes/boton_02_servicios.gif"></a><a href="portafolio.html"><img src="/imagenes/boton_03_portafolio.gif"></a><a href="contactanos.html"><img src="/imagenes/boton_04_contactenos.gif"></a>
+        </div>
+        <div id="contenido">
+            <div id="columna">
+                <h1>SERVICIOS</h1>
+                <p>En este apartado podrá buscar los exoplanetas, misiones y estrellas, y le mostrará los datos dependiendo de su búsqueda. Si tiene dudas de los datos existentes puede ir al apartado de portafolio.</p>
+                <form id="searchForm">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" name="name">
+                    <button type="submit">Buscar</button>
+                </form>
+                <div id="result"></div>
+            </div>
+        </div>
+        <div id="pie">
+            <p>Lizeth Carolina Segovia Noriega</p>
+            <p>Angel Osmany Delgado Montoya</p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const response = await fetch(`/search?name=${name}`);
+            const result = await response.json();
+            const resultDiv = document.getElementById('result');
+            if (result.length > 0) {
+                resultDiv.innerHTML = result.map(exoplanet => `
+                    <div>
+                        <h2>${exoplanet.nombre}</h2>
+                        <p>Radio: ${exoplanet.radio}</p>
+                        <p>Masa: ${exoplanet.masa}</p>
+                        <p>Periodo Orbital: ${exoplanet.periodo_orbital}</p>
+                        <p>Distancia: ${exoplanet.distancia}</p>
+                        <p>Estrella ID: ${exoplanet.estrella_id}</p>
+                        <p>Descubrimiento: ${JSON.stringify(exoplanet.descubrimiento)}</p>
+                    </div>
+                `).join('');
+            } else {
+                resultDiv.innerHTML = 'No se encontraron resultados.';
+            }
+        });
+    </script>
+</body>
+</html>

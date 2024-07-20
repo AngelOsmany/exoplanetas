@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contáctanos</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+    <div id="container">
+        <div id="encabezado">
+            <img src="/imagenes/encabezado_logo.jpeg" width="550" height="200"><img src="/imagenes/encabezado_modelo.jpeg" width="350" height="200">
+        </div>
+        <div id="menu">
+            <a href="index.html"><img src="imagenes/boton_01_bienvenidos.gif"></a><a href="servicios.html"><img src="imagenes/boton_02_servicios.gif"></a><a href="portafolio.html"><img src="imagenes/boton_03_portafolio.gif"></a><a href="contactanos.html"><img src="imagenes/boton_04_contactenos.gif"></a>
+        </div>
+        <div id="contenido">
+            <form>
+                <fieldset>
+                    <legend>Ingresa tus datos</legend>
+                    <table>
+                        <tr>
+                            <td><label for="nombre">NOMBRE:</label></td>
+                            <td><input type="text" name="nombre" id="nombre"></td>
+                        </tr>
+                        <tr>
+                            <td>SEXO:</td>
+                            <td>
+                                <input type="radio" name="sexo" id="masc" value="M">
+                                <label for="masc">MASCULINO</label>
+                                <input type="radio" name="sexo" id="fem" value="F">
+                                <label for="fem">FEMENINO</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="direccion">DIRECCION:</label></td>
+                            <td><input type="text" name="direccion" id="direccion"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="fechaNacimiento">FECHA DE NACIMIENTO:</label></td>
+                            <td><input type="date" name="fechaNacimiento" id="fechaNacimiento"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="correo">CORREO:</label></td>
+                            <td><input type="email" name="correo" id="correo"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="telefono">TELEFONO:</label></td>
+                            <td><input type="tel" name="telefono" id="telefono"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="foto">FOTOGRAFIA:</label></td>
+                            <td><input type="file" name="foto" id="foto"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="submit" name="Enviar"></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </form>
+        </div>
+        <div id="pie">
+            <p>Lizeth Carolina Segovia Noriega</p>
+            <p>Angel Osmany Delgado Montoya</p>
+        </div>
+    </div>
+</body>
+</html>
