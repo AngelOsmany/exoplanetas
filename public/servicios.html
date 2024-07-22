@@ -35,21 +35,13 @@
         document.getElementById('searchForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('name').value;
-            const response = await fetch(`/search?name=${name}`);
+            const response = await fetch(`/search?name=${encodeURIComponent(name)}`);
             const result = await response.json();
             const resultDiv = document.getElementById('result');
-            if (result.length > 0) {
-                resultDiv.innerHTML = result.map(exoplanet => `
-                    <div>
-                        <h2>${exoplanet.nombre}</h2>
-                        <p>Radio: ${exoplanet.radio}</p>
-                        <p>Masa: ${exoplanet.masa}</p>
-                        <p>Periodo Orbital: ${exoplanet.periodo_orbital}</p>
-                        <p>Distancia: ${exoplanet.distancia}</p>
-                        <p>Estrella ID: ${exoplanet.estrella_id}</p>
-                        <p>Descubrimiento: ${JSON.stringify(exoplanet.descubrimiento)}</p>
-                    </div>
-                `).join('');
+            if (result.exoplanetas.length > 0 || result.estrellas.length > 0 || result.misiones.length > 0) {
+                resultDiv.innerHTML = `<h2>Exoplanetas</h2><pre>${JSON.stringify(result.exoplanetas, null, 2)}</pre>
+                                       <h2>Estrellas</h2><pre>${JSON.stringify(result.estrellas, null, 2)}</pre>
+                                       <h2>Misiones</h2><pre>${JSON.stringify(result.misiones, null, 2)}</pre>`;
             } else {
                 resultDiv.innerHTML = 'No se encontraron resultados.';
             }
