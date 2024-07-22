@@ -1,28 +1,36 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const Exoplanet = require('./models/exoplanet');
+const { MongoClient } = require('mongodb');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-mongoose.connect('mongodb://localhost:27017/exoplanetas_db', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('Conexión a MongoDB exitosa');
-}).catch(err => {
-    console.error('Error al conectar a MongoDB', err);
-});
+const uri = 'mongodb://localhost:27017';
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+client.connect()
+    .then(() => {
+        console.log('Conexión a MongoDB exitosa');
+    })
+    .catch(err => {
+        console.error('Error al conectar a MongoDB', err);
+    });
 
 app.use(express.static('public'));
 
 app.get('/search', async (req, res) => {
     try {
         const name = req.query.name;
-        console.log(`Buscando exoplaneta con nombre: ${name}`);
-        const result = await Exoplanet.find({ nombre: { $regex: new RegExp(name, 'i') } });
-        console.log('Resultados de la búsqueda:', result);
-        res.json(result);
+        console.log(`Buscando con nombre: ${name}`);
+
+        const database = client.db('exoplanetas_db');
+        
+        const exoplanetas = await database.collection('exoplanetas').find({ nombre: { $regex: new RegExp(name, 'i') } }).toArray();
+        const estrellas = await database.collection('estrellas').find({ nombre: { $regex: new RegExp(name, 'i') } }).toArray();
+        const misiones = await database.collection('misiones').find({ nombre: { $regex: new RegExp(name, 'i') } }).toArray();
+
+        const results = { exoplanetas, estrellas, misiones };
+        console.log('Resultados de la búsqueda:', results);
+        res.json(results);
     } catch (error) {
         console.error('Error en la búsqueda:', error);
         res.status(500).send(error.message);
